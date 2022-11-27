@@ -7,13 +7,7 @@ public class PlayerShooting : MonoBehaviour
     public float bulletVelocity = 5f;
     public GameObject bullet;
     public GameObject bullet1;
-    // Use this for initialization
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -28,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
                                     Quaternion.identity);
             // Adds velocity to the bullet
             bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletVelocity;
-            Destroy(bullet, 2);
+            Destroy(bullet, 1);
         }
     }
 }

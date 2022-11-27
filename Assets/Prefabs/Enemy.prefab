@@ -101,7 +101,8 @@ MonoBehaviour:
   player: {fileID: 0}
   followSpeed: 0.05
   _enemyHealth: 100
-  enemyDamage: 20
+  enemyDamage: 2
+  playerHealth: {fileID: 0}
 --- !u!61 &1415622062874567956
 BoxCollider2D:
   m_ObjectHideFlags: 0

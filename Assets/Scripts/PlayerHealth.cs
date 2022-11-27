@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float _playerHealth;
+    public static PlayerHealth playerHealthInstance;
+    public float _playerHealth;
+    float maxHealth = 100f;
     void Start()
     {
+        playerHealthInstance = this;
         _playerHealth = 100f;
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Hit");
-            _playerHealth -= EnemyAi.enemyInstance.enemyDamage;
-        }
     }
     private void Update()
     {
+        DefaultHealth();
         PlayerDead();
     }
     void PlayerDead()
@@ -26,6 +22,13 @@ public class PlayerHealth : MonoBehaviour
         if(_playerHealth <= 0)
         {
             Destroy(this.gameObject);
+        }
+    }
+    void DefaultHealth()
+    {
+        if(_playerHealth >= maxHealth)
+        {
+            _playerHealth = maxHealth;
         }
     }
 }

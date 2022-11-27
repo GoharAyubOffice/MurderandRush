@@ -9,8 +9,9 @@ public class EnemyAi : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float followSpeed = .05f;
     public float _enemyHealth;
+    public float enemyDamage = 1f;
 
-    public float enemyDamage = 20f;
+    [SerializeField] PlayerHealth playerHealth;
 
     private Vector2 _directionToPlayer;
     BoxCollider2D bc;
@@ -21,9 +22,12 @@ public class EnemyAi : MonoBehaviour
         {
             enemyInstance = this;
         }
-        player = GameObject.Find("Player");
         _enemyHealth = 100f;
+
         bc = GetComponent<BoxCollider2D>();
+
+        player = GameObject.Find("Player");
+        playerHealth = FindObjectOfType<PlayerHealth>();
     }
     private void FixedUpdate()
     {
@@ -36,8 +40,6 @@ public class EnemyAi : MonoBehaviour
         _directionToPlayer = (player.transform.position - transform.position).normalized;
         transform.Translate(new Vector2(_directionToPlayer.x, _directionToPlayer.y) * followSpeed);
     }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -48,6 +50,10 @@ public class EnemyAi : MonoBehaviour
             {
                 followSpeed += 0.01f;
             }
+        }
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            playerHealth._playerHealth -= enemyDamage;
         }
     }
     void KillEnemy()

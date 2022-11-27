@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     public LayerMask _tileLayer;
 
-    private Rigidbody2D _playerRigidbody;
+    public Rigidbody2D _playerRigidbody;
     private void Start()
     {
         if(playerInstance == null)
