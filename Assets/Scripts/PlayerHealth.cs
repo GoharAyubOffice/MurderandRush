@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
         if(_playerHealth <= 0)
         {
             Destroy(this.gameObject);
+            GameManager.gameManagerInstacne.MainMenu(); //If player die Go to Main Menu Scene
         }
     }
     void DefaultHealth()
