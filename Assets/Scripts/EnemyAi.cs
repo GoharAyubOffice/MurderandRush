@@ -26,7 +26,7 @@ public class EnemyAi : MonoBehaviour
 
         bc = GetComponent<BoxCollider2D>();
 
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Murderer");
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
     private void FixedUpdate()

@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float distance = 1f;
     public float playerDamage = 50f;
 
+    private Vector3 targetRot;
+
     public LayerMask _tileLayer;
 
     public Rigidbody2D _playerRigidbody;
@@ -21,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
             playerInstance = this;
         }
         _playerRigidbody = GetComponent<Rigidbody2D>();
+
+        targetRot = new Vector3(0, 0, 0);
     }
     private void Update()
     {
@@ -35,6 +39,16 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         _playerRigidbody.velocity = new Vector2(horizontalInput * _playerSpeed, _playerRigidbody.velocity.y);
+
+        if(horizontalInput > 0)
+        {
+            targetRot.y = 0;
+        }
+        if(horizontalInput < 0)
+        {
+            targetRot.y = 180;
+        }
+        transform.eulerAngles = targetRot;
     }
     void Jump()
     {
