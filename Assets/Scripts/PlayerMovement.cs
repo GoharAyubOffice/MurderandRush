@@ -11,11 +11,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float distance = 1f;
     public float playerDamage = 50f;
 
-    private Vector3 targetRot;
-
     public LayerMask _tileLayer;
 
     public Rigidbody2D _playerRigidbody;
+
+    private Animator anim;
+
+    public bool isJumping;
+
     private void Start()
     {
         if(playerInstance == null)
@@ -24,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         }
         _playerRigidbody = GetComponent<Rigidbody2D>();
 
-        targetRot = new Vector3(0, 0, 0);
+        anim = GetComponent<Animator>();
     }
     private void Update()
     {
@@ -32,7 +35,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButton("Jump"))
         {
+            anim.SetBool("isJumping", true);
             Jump();
+        }
+        else
+        {
+            anim.SetBool("isJumping", false);
         }
     }
     private void MovePlayer()
@@ -40,15 +48,23 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         _playerRigidbody.velocity = new Vector2(horizontalInput * _playerSpeed, _playerRigidbody.velocity.y);
 
-        if(horizontalInput > 0)
+        if(horizontalInput == 0)
         {
-            targetRot.y = 0;
+            anim.SetBool("isRunning", false);
+        }
+        else
+        {
+            anim.SetBool("isRunning", true);
+        }
+
+        if (horizontalInput > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
         }
         if(horizontalInput < 0)
         {
-            targetRot.y = 180;
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
-        transform.eulerAngles = targetRot;
     }
     void Jump()
     {
@@ -65,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 position = transform.position;
         Vector2 direction = Vector2.down;
-
+        isJumping = true;
         RaycastHit2D hit = Physics2D.Raycast(position, direction, distance, _tileLayer);
         if (hit.collider != null)
         {
